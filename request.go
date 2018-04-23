@@ -42,6 +42,7 @@ type Args struct {
 	BasicAuth BasicAuth
 	Body      io.Reader
 	Hooks     []Hook
+	Close     bool
 }
 
 // Request is alias Args
@@ -386,5 +387,6 @@ func req2arg(req *Request) (a *Args) {
 		BasicAuth: req.BasicAuth,
 		Body:      req.Body,
 		Hooks:     req.Hooks,
+		Close:     req.Close,
 	}
 }
