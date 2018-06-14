@@ -146,6 +146,9 @@ func buildHTTPRequest(method string, url string, a *Args) (req *http.Request, er
 	if a.BasicAuth.Username != "" {
 		req.SetBasicAuth(a.BasicAuth.Username, a.BasicAuth.Password)
 	}
+	if a.Close == true {
+		req.Close = true
+	}
 	return
 }
 
