@@ -12,7 +12,7 @@ import (
 func ExampleRequest_Get() {
 	c := new(http.Client)
 	req := request.NewRequest(c)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Get(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -20,13 +20,13 @@ func ExampleRequest_Get() {
 	fmt.Println(d.Get("url").MustString())
 	// Output:
 	//true
-	//http://httpbin.org/get
+	//https://httpbin.org/get
 }
 
 func ExampleGet() {
 	c := new(http.Client)
 	args := request.NewArgs(c)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := request.Get(url, args)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -34,7 +34,7 @@ func ExampleGet() {
 	fmt.Println(d.Get("url").MustString())
 	// Output:
 	//true
-	//http://httpbin.org/get
+	//https://httpbin.org/get
 }
 
 func ExampleRequest_Get_params() {
@@ -44,13 +44,13 @@ func ExampleRequest_Get_params() {
 		"a": "1",
 		"b": "2",
 	}
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Get(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
 	fmt.Println(d.Get("url").MustString())
 	// Output:
-	//http://httpbin.org/get?a=1&b=2
+	//https://httpbin.org/get?a=1&b=2
 }
 
 func ExampleRequest_Get_customHeaders() {
@@ -60,7 +60,7 @@ func ExampleRequest_Get_customHeaders() {
 		"X-Abc":      "abc",
 		"User-Agent": "go-request-test",
 	}
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Get(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -78,7 +78,7 @@ func ExampleRequest_Post() {
 		"a": "1",
 		"b": "2",
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	defer resp.Body.Close()
 }
@@ -90,7 +90,7 @@ func ExamplePost() {
 		"a": "1",
 		"b": "2",
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := request.Post(url, args)
 	defer resp.Body.Close()
 }
@@ -102,7 +102,7 @@ func ExampleRequest_Get_cookies() {
 		"name": "value",
 		"foo":  "bar",
 	}
-	url := "http://httpbin.org/cookies"
+	url := "https://httpbin.org/cookies"
 	resp, _ := req.Get(url)
 	defer resp.Body.Close()
 }
@@ -115,7 +115,7 @@ func ExampleRequest_Post_files() {
 	req.Files = []request.FileField{
 		{FieldName: "abc", FileName: "abc.txt", File: f},
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	defer resp.Body.Close()
 }
@@ -127,7 +127,7 @@ func ExampleRequest_Post_rawBody() {
 	req.Headers = map[string]string{
 		"Content-Type": request.DefaultContentType,
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	defer resp.Body.Close()
 }

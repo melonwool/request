@@ -1,6 +1,8 @@
 package request
 
 import (
+	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/http/cookiejar"
@@ -11,7 +13,7 @@ import (
 )
 
 // Version export version
-const Version = "0.8.0"
+const Version = "0.9.0"
 
 // DefaultClient for NewArgs and NewRequest
 var DefaultClient = new(http.Client)
@@ -201,6 +203,30 @@ func (req *Request) Get(url interface{}) (resp *Response, err error) {
 	return
 }
 
+// GetResult issues a GET to the specified URL.
+//
+// url can be string or *url.URL or ur.URL
+// result is an url *output struct
+func (req *Request) GetResult(url,result interface{}) (err error) {
+	var resp *Response
+	if resp, err = Get(url2string(url), req2arg(req));err !=nil{
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		err = errors.New(url2string(url) + "http status code is :"+resp.Status)
+		return
+	}
+	var resultBytes []byte
+	if resultBytes, err = resp.Content(); err != nil {
+		return
+	}
+	if err = json.Unmarshal(resultBytes, result); err != nil {
+		return
+	}
+	return
+}
+
 // Head issues a HEAD to the specified URL.
 //
 // Caller should close resp.Body when done reading from it.
@@ -230,6 +256,31 @@ func Post(url string, a *Args) (resp *Response, err error) {
 // url can be string or *url.URL or ur.URL
 func (req *Request) Post(url interface{}) (resp *Response, err error) {
 	resp, err = Post(url2string(url), req2arg(req))
+	return
+}
+
+// PostResult issues a POST to the specified URL.
+//
+// url can be string or *url.URL or ur.URL
+//
+// result is an url *output struct
+func (req *Request) PostResult(url , result interface{}) (err error) {
+	var resp *Response
+	if resp, err = Post(url2string(url), req2arg(req));err !=nil {
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		err = errors.New(url2string(url) + "http status code is :"+resp.Status)
+		return
+	}
+	var resultBytes []byte
+	if resultBytes, err = resp.Content(); err != nil {
+		return
+	}
+	if err = json.Unmarshal(resultBytes, result); err != nil {
+		return
+	}
 	return
 }
 

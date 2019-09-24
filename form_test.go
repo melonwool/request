@@ -19,7 +19,7 @@ func TestPost(t *testing.T) {
 		"a":   "A",
 		"foo": "bar",
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -31,6 +31,27 @@ func TestPost(t *testing.T) {
 			"a":   "A",
 			"foo": "bar",
 		}, true)
+}
+
+func TestPostResult(t *testing.T) {
+	c := new(http.Client)
+	req := NewRequest(c)
+	req.Data = map[string]string{
+		"a":   "A",
+		"foo": "bar",
+	}
+	url := "https://httpbin.org/post"
+	out := &struct {
+		URL  string `json:"url"`
+		Form struct {
+			A   string `json:"a"`
+			Foo string `json:"foo"`
+		} `json:"form"`
+	}{}
+	_ = req.PostResult(url, out)
+	assert.Equal(t, out.URL, url)
+	assert.Equal(t, out.Form.A, "A")
+	assert.Equal(t, out.Form.Foo, "bar")
 }
 
 func TestPostFiles(t *testing.T) {
@@ -56,7 +77,7 @@ func TestPostFiles(t *testing.T) {
 		{"abc", "abc.txt", b},
 		{"test", "test.txt", f2},
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -80,7 +101,7 @@ func TestPostRawBody(t *testing.T) {
 	req.Headers = map[string]string{
 		"Content-Type": DefaultContentType,
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	defer resp.Body.Close()
 
@@ -97,7 +118,7 @@ func TestPostXML(t *testing.T) {
 	req := NewRequest(c)
 	xml := "<xml><a>abc</a></xml"
 	req.Body = strings.NewReader(xml)
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	defer resp.Body.Close()
 
@@ -110,7 +131,7 @@ func TestPostFormIO(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
 	body := strings.NewReader("a=1&b=2")
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, body)
 	defer resp.Body.Close()
 
@@ -126,7 +147,7 @@ func TestPostFormString(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
 	s := "a=1&b=2"
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, s)
 	defer resp.Body.Close()
 
@@ -145,7 +166,7 @@ func TestPostFormStructA(t *testing.T) {
 		"a": "1",
 		"b": "2",
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, s)
 	defer resp.Body.Close()
 
@@ -164,7 +185,7 @@ func TestPostFormStructB(t *testing.T) {
 		"a": {"1", "2"},
 		"b": {"2", "3"},
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, s)
 	defer resp.Body.Close()
 
@@ -203,7 +224,7 @@ func TestPostFormFileA(t *testing.T) {
 	req.Files = []FileField{
 		{"abc", "abc.txt", b},
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, nil)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -233,7 +254,7 @@ func TestPostFormFileB(t *testing.T) {
 	req.Files = []FileField{
 		{"abc", "abc.txt", b},
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.PostForm(url, data)
 	d, _ := resp.Json()
 	defer resp.Body.Close()

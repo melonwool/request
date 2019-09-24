@@ -13,7 +13,7 @@ import (
 func TestGet(t *testing.T) {
 	c := &http.Client{}
 	req := NewRequest(c)
-	u2, _ := url.Parse("http://httpbin.org/get")
+	u2, _ := url.Parse("https://httpbin.org/get")
 	resp, _ := req.Get(u2)
 	assert.Equal(t, resp.Ok(), true)
 
@@ -25,7 +25,7 @@ func TestGet(t *testing.T) {
 	resp, _ = req.Get(u3)
 	assert.Equal(t, resp.Ok(), true)
 
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ = req.Get(url)
 	d, _ := resp.Json()
 	t2, _ := resp.Text()
@@ -41,6 +41,17 @@ func TestGet(t *testing.T) {
 
 }
 
+func TestGetResult(t *testing.T) {
+	c := &http.Client{}
+	req := NewRequest(c)
+	url := "https://httpbin.org/get"
+	out := &struct {
+		URL string `json:url`
+	}{}
+	_ = req.GetResult(url, out)
+	assert.Equal(t, out.URL, url)
+}
+
 func TestGetParams(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
@@ -48,7 +59,7 @@ func TestGetParams(t *testing.T) {
 		"foo": "bar",
 		"a":   "1",
 	}
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Get(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -68,7 +79,7 @@ func TestGetParams2(t *testing.T) {
 		"foo": "bar",
 		"a":   "1",
 	}
-	url := "http://httpbin.org/get?ab=cd"
+	url := "https://httpbin.org/get?ab=cd"
 	resp, _ := req.Get(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -85,19 +96,19 @@ func TestGetParams2(t *testing.T) {
 func TestHead(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Head(url)
 	defer resp.Body.Close()
 
 	assert.Equal(t, resp.Ok(), true)
 	content, _ := resp.Content()
-	assert.Equal(t, content, []byte{})
+	assert.Equal(t, string(content), "")
 }
 
 func TestPut(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
-	url := "http://httpbin.org/put"
+	url := "https://httpbin.org/put"
 	resp, _ := req.Put(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -109,7 +120,7 @@ func TestPut(t *testing.T) {
 func TestDelete(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
-	url := "http://httpbin.org/delete"
+	url := "https://httpbin.org/delete"
 	resp, _ := req.Delete(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -121,7 +132,7 @@ func TestDelete(t *testing.T) {
 func TestPatch(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
-	url := "http://httpbin.org/patch"
+	url := "https://httpbin.org/patch"
 	resp, _ := req.Patch(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -133,7 +144,7 @@ func TestPatch(t *testing.T) {
 func TestOptions(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Options(url)
 	defer resp.Body.Close()
 
@@ -144,7 +155,7 @@ func TestPostJson(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
 	req.Json = []int{1, 2, 3}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -165,7 +176,7 @@ func TestPostJson2(t *testing.T) {
 		"a":   "b",
 		"foo": "bar",
 	}
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	d, _ := resp.Json()
 	defer resp.Body.Close()
@@ -200,7 +211,7 @@ func TestPostJson3(t *testing.T) {
 		E: 5,
 	}
 	req.Json = d
-	url := "http://httpbin.org/post"
+	url := "https://httpbin.org/post"
 	resp, _ := req.Post(url)
 	j2, _ := resp.Json()
 	defer resp.Body.Close()
@@ -220,7 +231,7 @@ func TestBasicAuth(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
 	req.BasicAuth = BasicAuth{"user", "passwd"}
-	url := "http://httpbin.org/basic-auth/user/passwd"
+	url := "https://httpbin.org/basic-auth/user/passwd"
 	resp, _ := req.Get(url)
 	defer resp.Body.Close()
 	assert.Equal(t, resp.OK(), true)
@@ -229,7 +240,7 @@ func TestBasicAuth(t *testing.T) {
 		Username: "user2",
 		Password: "passwd2",
 	}
-	url = "http://httpbin.org/basic-auth/user2/passwd2"
+	url = "https://httpbin.org/basic-auth/user2/passwd2"
 	resp, _ = req.Get(url)
 	defer resp.Body.Close()
 	assert.Equal(t, resp.OK(), true)
@@ -239,7 +250,7 @@ func TestReset(t *testing.T) {
 	c := new(http.Client)
 	req := NewRequest(c)
 	req.BasicAuth = BasicAuth{"user", "passwd"}
-	url := "http://httpbin.org"
+	url := "https://httpbin.org"
 	req.Get(url)
 
 	req.Reset()
@@ -247,7 +258,7 @@ func TestReset(t *testing.T) {
 }
 
 func TestGetArgsNilA(t *testing.T) {
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := Get(url, nil)
 	defer resp.Body.Close()
 
@@ -256,7 +267,7 @@ func TestGetArgsNilA(t *testing.T) {
 
 func TestGetArgsNilB(t *testing.T) {
 	args := NewArgs(nil)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := Get(url, args)
 	defer resp.Body.Close()
 
@@ -265,7 +276,7 @@ func TestGetArgsNilB(t *testing.T) {
 
 func TestGetArgsNilC(t *testing.T) {
 	req := NewRequest(nil)
-	url := "http://httpbin.org/get"
+	url := "https://httpbin.org/get"
 	resp, _ := req.Get(url)
 	defer resp.Body.Close()
 

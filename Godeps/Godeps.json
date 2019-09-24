@@ -1,6 +1,6 @@
 {
-	"ImportPath": "github.com/mozillazg/request",
-	"GoVersion": "go1.6",
+	"ImportPath": "github.com/melonwool/request",
+	"GoVersion": "go1.12",
 	"GodepVersion": "v74",
 	"Deps": [
 		{
