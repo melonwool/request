@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mozillazg/request"
+	"github.com/melonwool/request"
 )
 
 func diff(req *request.Request) {

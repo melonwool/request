@@ -1,4 +1,4 @@
-package: github.com/mozillazg/request
+package: github.com/melonwool/request
 import:
 - package: github.com/bitly/go-simplejson
   version: aabad6e819789e569bd6aabf444c935aa9ba1e44

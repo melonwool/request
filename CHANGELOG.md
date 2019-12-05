@@ -81,13 +81,13 @@
 
 ### Bugfixes
 
-* Fix "http.Client don't use original Header when it do redirect" [#6](https://github.com/mozillazg/request/issues/6)
+* Fix "http.Client don't use original Header when it do redirect" [#6](https://github.com/melonwool/request/issues/6)
 
 
 ## 0.1.0 (2015-01-08)
 
 * Initial Release
 
-[#23]: https://github.com/mozillazg/request/pull/23
+[#23]: https://github.com/melonwool/request/pull/23
 [@DavidCai1993]: https://github.com/DavidCai1993
-[#26]: https://github.com/mozillazg/request/pull/26
+[#26]: https://github.com/melonwool/request/pull/26

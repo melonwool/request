@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/mozillazg/request"
+	"github.com/melonwool/request"
 )
 
 type dumpHook struct {

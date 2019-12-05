@@ -2,8 +2,8 @@ request
 =======
 [![Build Status](https://travis-ci.org/mozillazg/request.svg?branch=master)](https://travis-ci.org/mozillazg/request)
 [![Coverage Status](https://coveralls.io/repos/mozillazg/request/badge.png?branch=master)](https://coveralls.io/r/mozillazg/request?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/mozillazg/request)](https://goreportcard.com/report/github.com/mozillazg/request)
-[![GoDoc](https://godoc.org/github.com/mozillazg/request?status.svg)](https://godoc.org/github.com/mozillazg/request)
+[![Go Report Card](https://goreportcard.com/badge/github.com/melonwool/request)](https://goreportcard.com/report/github.com/melonwool/request)
+[![GoDoc](https://godoc.org/github.com/melonwool/request?status.svg)](https://godoc.org/github.com/melonwool/request)
 
 A developer-friendly HTTP request library for Gopher. Inspired by [Python-Requests](https://github.com/kennethreitz/requests).
 
@@ -12,7 +12,7 @@ Installation
 ------------
 
 ```
-go get -u github.com/mozillazg/request
+go get -u github.com/melonwool/request
 ```
 
 
@@ -20,7 +20,7 @@ Documentation
 --------------
 
 API documentation can be found here:
-https://godoc.org/github.com/mozillazg/request
+https://godoc.org/github.com/melonwool/request
 
 
 Usage
@@ -28,7 +28,7 @@ Usage
 
 ```go
 import (
-    "github.com/mozillazg/request"
+    "github.com/melonwool/request"
 )
 ```
 
@@ -107,7 +107,7 @@ req.Proxy = "http://127.0.0.1:8080"
 // req.Proxy = "socks5://127.0.0.1:57341"
 resp, err := req.Get("http://httpbin.org/get")
 ```
-or https://github.com/mozillazg/request/tree/develop/_example/proxy
+or https://github.com/melonwool/request/tree/develop/_example/proxy
 
 **HTTP Basic Authentication**:
 ```go

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/mozillazg/request"
+	"github.com/melonwool/request"
 )
 
 const (

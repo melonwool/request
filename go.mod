@@ -7,6 +7,5 @@ require (
 	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869
 	github.com/kr/pretty v0.0.0-20160325215624-add1dbc86daf
 	github.com/kr/text v0.0.0-20160504234017-7cafcd837844
-	github.com/mozillazg/request v0.8.0
 	golang.org/x/net v0.0.0-20190923162816-aa69164e4478
 )
